@@ -45,3 +45,27 @@ class BinppReader(DatasetReader):
             for _ in range(nb_objects):
                 weights.append(int(reader.readline()))
             return (capacity, weights)
+
+class JburkardtReader(DatasetReader):
+    '''Read problem description according to the Jburkardt format'''
+
+    def __init__(self, c_filename: str, w_filename: str) -> None:
+        if not path.exists(c_filename):
+            raise ValueError(f'Unkown capacity file [{c_filename}]')
+        if not path.exists(w_filename):
+            raise ValueError(f'Unkown weights file [{w_filename}]')
+        self.__c_filename = c_filename
+        self.__w_filename = w_filename
+
+    def _load_data_from_disk(self) -> WeightSet:
+        with open(self.__c_filename, 'r') as r1:
+            capacity: int = int(r1.readline())
+
+        with open(self.__w_filename, 'r') as r2:
+            lines = r2.readlines()
+            
+            weights = []
+            for i in range(len(lines)-1):
+                weights.append(int(lines[i].strip()))
+    
+            return (capacity, weights)
