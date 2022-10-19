@@ -20,7 +20,7 @@ class NextFit(Online):
 
 class WorstSolution(Online):
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
-        solution = [[]]
+        solution = []
         for w in stream:
             solution.append([w])
         return solution
