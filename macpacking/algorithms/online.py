@@ -18,12 +18,15 @@ class NextFit(Online):
                 remaining = capacity - w
         return solution
 
+
 class WorstSolution(Online):
+
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
         solution = []
         for w in stream:
             solution.append([w])
         return solution
+
 
 class FirstFit(Online):
 
@@ -39,6 +42,7 @@ class FirstFit(Online):
             if not added:
                 solution.append([w])
         return solution
+
 
 class BestFit(Online):
 
@@ -57,6 +61,7 @@ class BestFit(Online):
             else:
                 solution.append([w])
         return solution
+
 
 class WorstFit(Online):
 
