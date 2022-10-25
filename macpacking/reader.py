@@ -51,6 +51,9 @@ class JburkardtReader(DatasetReader):
     '''Read problem description according to the Jburkardt format'''
 
     def __init__(self, c_filename: str, w_filename: str) -> None:
+        # Jburkardt Format requires two files, one containing 
+        # the capacity of the bins and one containing the weights
+        # of the items
         if not path.exists(c_filename):
             raise ValueError(f'Unkown capacity file [{c_filename}]')
         if not path.exists(w_filename):
@@ -66,6 +69,8 @@ class JburkardtReader(DatasetReader):
             lines = r2.readlines()
             
             weights = []
+            # Read each line, remove new line characters and
+            # cast the string to an integer
             for i in range(len(lines)-1):
                 weights.append(int(lines[i].strip()))
     

@@ -17,6 +17,8 @@ class NextFit(OfflineDecreasing):
     _OfflineDecreasing__delegation = Nf_online()
 
 
+# T2 Algorithms -------------------
+
 class FirstFit(OfflineDecreasing):
 
     _OfflineDecreasing__delegation = Ff_online()
@@ -30,3 +32,5 @@ class BestFit(OfflineDecreasing):
 class WorstFit(OfflineDecreasing):
 
     _OfflineDecreasing__delegation = Wf_online()
+
+# End of T2 Offline Algorithms -----
