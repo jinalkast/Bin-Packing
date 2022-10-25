@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from os import path
 from random import shuffle, seed
 from . import WeightSet, WeightStream
+import csv
 
 
 class DatasetReader(ABC):
@@ -75,3 +76,27 @@ class JburkardtReader(DatasetReader):
                 weights.append(int(lines[i].strip()))
     
             return (capacity, weights)
+
+
+class SolutionReader():
+
+
+    def __init__(self, fileList: list[str], solutionFile: str) -> None:
+        for filename in fileList:
+            if not path.exists(filename):
+                raise ValueError(f'Unkown file [{filename}]')
+        if not path.exists(solutionFile):
+            raise ValueError(f'Unkown file [{filename}]')
+        self.__fileList = fileList
+        self.__solutionFile = solutionFile
+
+
+    def readSolutions(self) -> list[int]:
+        with open(self.__solutionFile) as file:
+            reader = csv.reader(file, delimiter=',')
+            optimal_solutions = [0] * len(self.__fileList)
+            for row in reader:
+                for i in range(len(self.__fileList)):
+                    if row[0] in self.__fileList[i]:
+                        optimal_solutions[i] = int(row[1])
+        return optimal_solutions
