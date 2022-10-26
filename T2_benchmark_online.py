@@ -3,6 +3,7 @@ from os import listdir
 from os.path import isfile, join, basename
 from macpacking.algorithms.online import NextFit as NFOn, WorstSolution as WSOn, WorstFit as WFOn, BestFit as BFOn, FirstFit as FFOn
 from macpacking.reader import BinppReader
+from macpacking.reader import SolutionReader
 
 # We consider:
 #   - 50 objects (N1)
@@ -32,20 +33,22 @@ def run_bench_online_runningTime(cases: list[str], functions: list):
           runner.bench_func(name, binpacker, data)
 
 def run_analyze_correctness(cases: list[str], functions:list):
-    # optimal_solutions = get_solution_set(cases)
-    for func in functions:
-        # num_of_excess_bins = 0
-        # percent_excess
-        for case in cases:
-            strategy = func()
-            data = BinppReader(case).online()
-            num_of_bins = len(strategy(data))
-            # optimal_solution = solution[case]
-            # num_of_excess_bins += num_of_bins - optimal_solutions[case]
-            # percent_excess += num_of_bins/optimal_solution
-            print(f'{func.__name__}-{basename(case)}-{num_of_bins}')
-        # print(f'{func.__name__} mean excess {num_of_excess_bins/len(cases))
-        # print(f'{func.__name__} % excess {percent_excess/len(cases))
+    solution_reader = SolutionReader(cases,"./_datasets/solutions/binpp.csv")
+    optimal_solutions = solution_reader.readSolutions()
 
+    for func in functions:
+        num_of_excess_bins = 0
+        percent_excess = 0
+        for i in range(len(cases)):
+            strategy = func()
+            data = BinppReader(cases[i]).online()
+            num_of_bins = len(strategy(data))
+            optimal_solution = optimal_solutions[i]
+            num_of_excess_bins += num_of_bins - optimal_solutions[i]
+            percent_excess += num_of_bins/optimal_solution
+        print(f'{func.__name__} mean excess {num_of_excess_bins/len(cases)}')
+        print(f'{func.__name__} % excess {percent_excess/len(cases)}')
+        print()
+        
 if __name__ == "__main__":
     main()
