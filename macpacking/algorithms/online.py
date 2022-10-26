@@ -2,7 +2,7 @@ from .. import Solution, WeightStream
 from ..model import Online
 
 
-class NextFit(Online):
+class NextFitOn(Online):
 
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
         bin_index = 0
@@ -32,7 +32,7 @@ class WorstSolution(Online):
 
 # T2 - Online algorithms ------------
 
-class FirstFit(Online):
+class FirstFitOn(Online):
 
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
         solution = [[]]
@@ -54,7 +54,7 @@ class FirstFit(Online):
         return solution
 
 
-class BestFit(Online):
+class BestFitOn(Online):
 
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
         solution = [[]]
@@ -78,7 +78,7 @@ class BestFit(Online):
         return solution
 
 
-class WorstFit(Online):
+class WorstFitOn(Online):
 
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
         solution = [[]]

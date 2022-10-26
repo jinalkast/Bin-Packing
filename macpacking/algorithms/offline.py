@@ -1,6 +1,6 @@
 from .. import Solution, WeightSet
 from ..model import Offline
-from .online import NextFit as Nf_online, FirstFit as Ff_online, BestFit as Bf_online, WorstFit as Wf_online
+from .online import NextFitOn as Nf_online, FirstFitOn as Ff_online, BestFitOn as Bf_online, WorstFitOn as Wf_online
 
 
 class OfflineDecreasing(Offline):
@@ -12,24 +12,24 @@ class OfflineDecreasing(Offline):
             return self.__delegation((capacity, weights))
 
 
-class NextFit(OfflineDecreasing):
+class NextFitOff(OfflineDecreasing):
 
     _OfflineDecreasing__delegation = Nf_online()
 
 
 # T2 Algorithms -------------------
 
-class FirstFit(OfflineDecreasing):
+class FirstFitOff(OfflineDecreasing):
 
     _OfflineDecreasing__delegation = Ff_online()
 
 
-class BestFit(OfflineDecreasing):
+class BestFitOff(OfflineDecreasing):
 
     _OfflineDecreasing__delegation = Bf_online()
 
 
-class WorstFit(OfflineDecreasing):
+class WorstFitOff(OfflineDecreasing):
 
     _OfflineDecreasing__delegation = Wf_online()
 
