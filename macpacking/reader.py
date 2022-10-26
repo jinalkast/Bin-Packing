@@ -68,18 +68,17 @@ class JburkardtReader(DatasetReader):
 
         with open(self.__w_filename, 'r') as r2:
             lines = r2.readlines()
-            
+
             weights = []
             # Read each line, remove new line characters and
             # cast the string to an integer
-            for i in range(len(lines)-1):
-                weights.append(int(lines[i].strip()))
-    
+            for line in lines:
+                weights.append(int(line.strip()))
+
             return (capacity, weights)
 
 
 class SolutionReader():
-
 
     def __init__(self, fileList: list[str], solutionFile: str) -> None:
         for filename in fileList:
@@ -88,8 +87,7 @@ class SolutionReader():
         if not path.exists(solutionFile):
             raise ValueError(f'Unkown file [{filename}]')
         self.__fileList = fileList
-        self.__solutionFile = solutionFile
-
+        self.__solutionFile = solutionFile  
 
     def readSolutions(self) -> list[int]:
         with open(self.__solutionFile) as file:

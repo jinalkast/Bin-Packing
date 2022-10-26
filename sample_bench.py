@@ -17,10 +17,8 @@ def main():
     cases = list_case_files(CASES)
     run_bench(cases)
 
-
 def list_case_files(dir: str) -> list[str]:
     return sorted([f'{dir}/{f}' for f in listdir(dir) if isfile(join(dir, f))])
-
 
 def run_bench(cases: list[str]):
     runner = pyperf.Runner()
@@ -29,7 +27,6 @@ def run_bench(cases: list[str]):
         data = BinppReader(case).online()
         binpacker = NextFit()
         runner.bench_func(name, binpacker, data)
-
 
 if __name__ == "__main__":
     main()
