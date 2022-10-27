@@ -25,7 +25,7 @@ ONLINE_STRATEGIES = [
 def main():
     '''Example of benchmark code'''
     cases = list_case_files(CASES)
-    run_bench_runningTime([cases[0]], OFFLINE_STRATEGIES + ONLINE_STRATEGIES)
+    run_bench_runningTime([cases[0]], [OFFLINE_STRATEGIES[1]])
 
 
 def list_case_files(dir: str) -> list[str]:
