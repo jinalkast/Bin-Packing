@@ -1,12 +1,9 @@
 import pyperf
 from os import listdir
 from os.path import isfile, join, basename
-from macpacking.algorithms.offline import NextFitOff as NFOff, WorstFitOff as WFOff, BestFitOff as BFOff, FirstFitOff as FFOff
-from macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn
-
-from macpacking.reader import BinppReader
-from macpacking.reader import SolutionReader
-
+from ..macpacking.algorithms.offline import NextFitOff as NFOff, WorstFitOff as WFOff, BestFitOff as BFOff, FirstFitOff as FFOff
+from ..macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn
+from ..macpacking.reader import BinppReader
 # We consider:
 #   - 50 objects (N1)
 #   - bin capacity of 150 (C3)
@@ -25,7 +22,7 @@ ONLINE_STRATEGIES = [
 def main():
     '''Example of benchmark code'''
     cases = list_case_files(CASES)
-    run_bench_runningTime([cases[0]], [OFFLINE_STRATEGIES[1]])
+    run_bench_runningTime(cases, ONLINE_STRATEGIES)
 
 
 def list_case_files(dir: str) -> list[str]:

@@ -104,7 +104,7 @@ class WorstFitOn(Online):
 
 # End of T2 Online Algorithms -----
 
-# T4 Algorithm ---
+# T4 Algorithms ---
 class RefinedFirstFitOn(Online):
     def classifyItem(self, weight: int) -> int:
         ratio = weight/self.capacity
@@ -145,7 +145,7 @@ class RefinedFirstFitOn(Online):
             for i in range(len(solution)):
                 # If bin is proper class and has room
                 if classes_of_bins[i] == item_class and (sum(solution[i]) + w < capacity):
-                    solution[i].append()
+                    solution[i].append(w)
                     found = True
                     break
 
@@ -155,3 +155,5 @@ class RefinedFirstFitOn(Online):
 
 
         return solution
+
+# End of T4 Algorithms ---- 
