@@ -1,3 +1,4 @@
+from sqlalchemy import false
 from .. import Solution, WeightStream
 from ..model import Online
 
@@ -102,3 +103,56 @@ class WorstFitOn(Online):
         return solution
 
 # End of T2 Online Algorithms -----
+
+# T4 Algorithm ---
+class WorstFitOn(Online):
+    def classifyItem(self, weight: int) -> int:
+        ratio = weight/self.capacity
+        # A-Piece
+        if 1/2 < ratio <= 1:
+            return 1
+
+        # B1-Piece
+        elif 2/5 < ratio <= 1/2:
+            return 2
+
+        # B2-Piece
+        elif 1/3 < ratio <= 2/5:
+            self.num_of_BTwos+=1
+            for i in (6,7,8,9):
+                # Is (mk)th b2 piece we've seen
+                if self.num_of_BTwos%i == 0:
+                    return 1
+            
+            #Not (mk)th b2 piece 
+            return 3
+
+        # X-Piece
+        elif 0 < ratio <= 1/3:
+            return 4
+
+    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+        self.capacity = capacity
+        self.num_of_BTwos = 0
+        solution = []
+        classes_of_bins = []
+        m = [6,7,8,9]
+        # For each item, find the emptiest bin with enough capacity to hold it
+        # If no such bin exists, create a new bin containing it
+        for w in stream:
+            found = False
+            item_class = self.classifyItem(w)
+            for i in range(len(solution)):
+                if classes_of_bins[i] == item_class and sum(solution[i]+w) < capacity:
+                    solution[i].append()
+                    found = True
+                    break
+                
+            if not(found):
+                solution.append([w])
+                classes_of_bins.append(item_class)
+            
+
+
+
+        return solution
