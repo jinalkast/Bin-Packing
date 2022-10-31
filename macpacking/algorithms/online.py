@@ -1,4 +1,3 @@
-from sqlalchemy import false
 from .. import Solution, WeightStream
 from ..model import Online
 

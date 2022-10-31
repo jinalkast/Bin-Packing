@@ -26,9 +26,10 @@ def main():
 def run_analyze_correctness(cases: list[str], functions: list):
     solution_reader = SolutionReader(cases, "./_datasets/solutions/binpp.csv")
     optimal_solutions = solution_reader.readSolutions()
+    avg_excess = {}
+    correct_percentage = {}
     for func in functions:
         num_of_excess_bins = 0
-        percent_excess = 0
         num_of_correct_solutions = 0
         for i in range(len(cases)):
             strategy = func()
@@ -42,12 +43,11 @@ def run_analyze_correctness(cases: list[str], functions: list):
 
             num_of_correct_solutions += num_of_bins == optimal_solution
             num_of_excess_bins += num_of_bins - optimal_solutions[i]
-            percent_excess += num_of_bins/optimal_solution
 
-        print(f'{func.__name__} mean excess {num_of_excess_bins/len(cases)}')
-        print(f'{func.__name__} % excess {round(100*percent_excess/len(cases),2)}')
-        print(f'{func.__name__} Correct % = {100*num_of_correct_solutions/len(cases)}')
-        print()
+        avg_excess[func.__name__] = num_of_excess_bins/len(cases)
+        correct_percentage[func.__name__] = 100*num_of_correct_solutions/len(cases)
+    
+    return [avg_excess, correct_percentage]
 
 if __name__ == "__main__":
     main()
