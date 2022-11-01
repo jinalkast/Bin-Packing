@@ -36,10 +36,10 @@ def pltOffline():
      plt.plot(file_names, WFOff_dur, label = "WorstFit Offline")
      plt.plot(file_names, FFOff_dur, label = "FirstFit Offline")
 
-     plt.errorbar(file_names, NFOff_dur, yerr=NFOff_error, fmt='o', label = "NextFit Offline")
-     plt.errorbar(file_names, BFOff_dur, yerr=BFOff_error, fmt='o', label = "BestFit Offline")
-     plt.errorbar(file_names, WFOff_dur, yerr=WFOff_error, fmt='o', label = "WorstFit Offline")
-     plt.errorbar(file_names, FFOff_dur, yerr=FFOff_error, fmt='o', label = "FirstFit Offline")
+     #plt.errorbar(file_names, NFOff_dur, yerr=NFOff_error, fmt='o', label = "NextFit Offline")
+     #plt.errorbar(file_names, BFOff_dur, yerr=BFOff_error, fmt='o', label = "BestFit Offline")
+     #plt.errorbar(file_names, WFOff_dur, yerr=WFOff_error, fmt='o', label = "WorstFit Offline")
+     #plt.errorbar(file_names, FFOff_dur, yerr=FFOff_error, fmt='o', label = "FirstFit Offline")
 
 
      plt.xlabel('Case')
@@ -47,7 +47,7 @@ def pltOffline():
      plt.title('Duration of Offline Algorithms')
      plt.legend()
      plt.show()
-     #plt.savefig("./analysis_tools/outputs/offline.png")
+     #plt.savefig("./analysis_tools/outputs/offline_t2.png")
 
 def pltOnline():
      plt.clf()
@@ -58,11 +58,11 @@ def pltOnline():
      plt.plot(file_names, WFOn_dur, label = "WorstFit Online")
      plt.plot(file_names, FFOn_dur, label = "FirstFit Online")
 
-     plt.errorbar(file_names, NFOn_dur, yerr=NFOn_error, fmt='o', label = "NextFit Online")
-     plt.errorbar(file_names, BFOn_dur, yerr=BFOn_error, fmt='o', label = "BestFit Online")
-     plt.errorbar(file_names, WFOn_dur, yerr=WFOn_error, fmt='o', label = "WorstFit Online")
-     plt.errorbar(file_names, FFOn_dur, yerr=FFOn_error, fmt='o', label = "FirstFit Online")
-     plt.errorbar(file_names, WS_dur, yerr=WS_error, fmt='o', label = "FirstFit Online")
+     #plt.errorbar(file_names, NFOn_dur, yerr=NFOn_error, fmt='o', label = "NextFit Online")
+     #plt.errorbar(file_names, BFOn_dur, yerr=BFOn_error, fmt='o', label = "BestFit Online")
+     #plt.errorbar(file_names, WFOn_dur, yerr=WFOn_error, fmt='o', label = "WorstFit Online")
+     #plt.errorbar(file_names, FFOn_dur, yerr=FFOn_error, fmt='o', label = "FirstFit Online")
+     #plt.errorbar(file_names, WS_dur, yerr=WS_error, fmt='o', label = "FirstFit Online")
 
 
      plt.xlabel('Case')
@@ -70,11 +70,11 @@ def pltOnline():
      plt.title('Duration of Online Algorithms')
      plt.legend()
      plt.show()
-     #plt.savefig("./analysis_tools/outputs/online.png")
+     #plt.savefig("./analysis_tools/outputs/online_t2.png")
 
 def main():
-     #pltOffline()
-     pltOnline()
+     pltOffline()
+     #pltOnline()
 
 if __name__ == "__main__":
     main()

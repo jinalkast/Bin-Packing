@@ -135,9 +135,8 @@ class RefinedFirstFitOn(Online):
         self.num_of_BTwos = 0
         solution = []
         classes_of_bins = []
-        m = [6,7,8,9]
-        # For each item, find the emptiest bin with enough capacity to hold it
-        # If no such bin exists, create a new bin containing it
+        # For each item, find the first bin of the same class with enough capacity to hold it
+        # If no such bin exists, create a new bin and classify it with the same designation of the item
         for w in stream:
             found = False
             item_class = self.classifyItem(w)
@@ -147,7 +146,8 @@ class RefinedFirstFitOn(Online):
                     solution[i].append(w)
                     found = True
                     break
-
+            
+            # No bin found with both the same class and enough space, creating new bin           
             if not(found):
                 solution.append([w])
                 classes_of_bins.append(item_class)

@@ -1,9 +1,9 @@
 from os import listdir
 from os.path import isfile, join
 from macpacking.algorithms.offline import NextFitOff as NFOff, WorstFitOff as WFOff, BestFitOff as BFOff, FirstFitOff as FFOff
-from macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn, RefinedFirstFitOn as RffOn
-from macpacking.reader import BinppReader
-from macpacking.reader import SolutionReader
+from ..macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn, RefinedFirstFitOn as RffOn
+from ..macpacking.reader import BinppReader
+from ..macpacking.reader import SolutionReader
 
 OFFLINE_STRATEGIES = [
     NFOff, WFOff, BFOff, FFOff,

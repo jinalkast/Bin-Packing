@@ -35,9 +35,11 @@ class WorstFitOff(OfflineDecreasing):
 
 # End of T2 Offline Algorithms -----
 
+
 # T4 Algorithms ----
 
 class RefinedFirstFitOff(OfflineDecreasing):
+
     _OfflineDecreasing__delegation = Rff_online()
 
 # End T4 Algorithms ----
