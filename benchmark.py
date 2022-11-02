@@ -1,8 +1,8 @@
 import pyperf
 from os import listdir
 from os.path import isfile, join, basename
-from macpacking.algorithms.offline import NextFitOff as NFOff, WorstFitOff as WFOff, BestFitOff as BFOff, FirstFitOff as FFOff
-from macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn
+from macpacking.algorithms.offline import NextFitOff as NFOff, WorstFitOff as WFOff, BestFitOff as BFOff, FirstFitOff as FFOff, RefinedFirstFitOff as RffOff
+from macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn, RefinedFirstFitOn as RffOn
 from macpacking.reader import BinppReader
 # We consider:
 #   - 50 objects (N1)
@@ -11,18 +11,18 @@ from macpacking.reader import BinppReader
 CASES = './_datasets/binpp/N1C3W2'
 
 OFFLINE_STRATEGIES = [
-    NFOff, WFOff, BFOff, FFOff,
+    NFOff, WFOff, BFOff, FFOff,RffOff
 ]
 
 ONLINE_STRATEGIES = [
-    NFOn, WS, WFOn, BFOn, FFOn,
+    NFOn, WS, WFOn, BFOn, FFOn, RffOn
 ]
 
 
 def main():
     '''Example of benchmark code'''
     cases = list_case_files(CASES)
-    run_bench_runningTime([cases[0]], OFFLINE_STRATEGIES)
+    run_bench_runningTime(cases, [RffOff])
 
 
 def list_case_files(dir: str) -> list[str]:

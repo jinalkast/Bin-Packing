@@ -1,15 +1,21 @@
 from .. import Solution, WeightSet
 from ..model import Offline
-from .online import NextFitOn as Nf_online, FirstFitOn as Ff_online, BestFitOn as Bf_online, WorstFitOn as Wf_online, RefinedFirstFitOn as Rff_online
+from .online import (
+    NextFitOn as Nf_online,
+    FirstFitOn as Ff_online,
+    BestFitOn as Bf_online,
+    WorstFitOn as Wf_online,
+    RefinedFirstFitOn as Rff_online)
 
 
 class OfflineDecreasing(Offline):
-        '''An offline version of the AnyFit algorithms, ordering the weight stream 
-        and delegating to the associated online version (avoiding code duplication)'''
+    '''An offline version of the AnyFit algorithms, ordering the weight
+    stream and delegating to the associated online version
+    (avoiding code duplication)'''
 
-        def _process(self, capacity: int, weights: WeightSet) -> Solution:
-            weights = sorted(weights, reverse=True)
-            return self.__delegation((capacity, weights))
+    def _process(self, capacity: int, weights: WeightSet) -> Solution:
+        weights = sorted(weights, reverse=True)
+        return self.__delegation((capacity, weights))
 
 
 class NextFitOff(OfflineDecreasing):

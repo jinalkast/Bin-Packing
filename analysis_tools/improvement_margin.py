@@ -1,7 +1,17 @@
 from os import listdir
 from os.path import isfile, join
-from macpacking.algorithms.offline import NextFitOff as NFOff, WorstFitOff as WFOff, BestFitOff as BFOff, FirstFitOff as FFOff
-from macpacking.algorithms.online import NextFitOn as NFOn, WorstSolution as WS, WorstFitOn as WFOn, BestFitOn as BFOn, FirstFitOn as FFOn, RefinedFirstFitOn as RffOn
+from macpacking.algorithms.offline import(
+    NextFitOff as NFOff,
+    WorstFitOff as WFOff,
+    BestFitOff as BFOff,
+    FirstFitOff as FFOff)
+from macpacking.algorithms.online import(
+    NextFitOn as NFOn,
+    WorstSolution as WS,
+    WorstFitOn as WFOn,
+    BestFitOn as BFOn,
+    FirstFitOn as FFOn,
+    RefinedFirstFitOn as RffOn)
 from macpacking.reader import BinppReader
 from macpacking.reader import SolutionReader
 
@@ -15,13 +25,16 @@ ONLINE_STRATEGIES = [
 
 CASES = './_datasets/binpp/N1C3W2'
 
+
 def list_case_files(dir: str) -> list[str]:
     return sorted([f'{dir}/{f}' for f in listdir(dir) if isfile(join(dir, f))])
+
 
 def main():
     '''Example of benchmark code'''
     cases = list_case_files(CASES)
     run_analyze_correctness(cases, OFFLINE_STRATEGIES + ONLINE_STRATEGIES)
+
 
 def run_analyze_correctness(cases: list[str], functions: list):
     solution_reader = SolutionReader(cases, "./_datasets/solutions/binpp.csv")
@@ -44,10 +57,12 @@ def run_analyze_correctness(cases: list[str], functions: list):
             num_of_correct_solutions += num_of_bins == optimal_solution
             num_of_excess_bins += num_of_bins - optimal_solutions[i]
 
-        avg_excess[func.__name__] = num_of_excess_bins/len(cases)
-        correct_percentage[func.__name__] = 100*num_of_correct_solutions/len(cases)
-    
+        avg_excess[func.__name__] = num_of_excess_bins / len(cases)
+        correct_percentage[func.__name__] = 100 * \
+            num_of_correct_solutions / len(cases)
+
     return [avg_excess, correct_percentage]
+
 
 if __name__ == "__main__":
     main()

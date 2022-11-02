@@ -20,6 +20,7 @@ class NextFitOn(Online):
 
 # T1 - Worst Possible algorithm ----
 
+
 class WorstSolution(Online):
 
     def _process(self, capacity: int, stream: WeightStream) -> Solution:
@@ -31,6 +32,7 @@ class WorstSolution(Online):
         return solution
 
 # T2 - Online algorithms ------------
+
 
 class FirstFitOn(Online):
 
@@ -71,7 +73,7 @@ class BestFitOn(Online):
                         bin_index = i
                         max_load = sum(solution[i])
             if bin_index >= 0:
-                solution[bin_index].append(w)    
+                solution[bin_index].append(w)
             # No bin found with enough space, creating new bin
             else:
                 solution.append([w])
@@ -95,15 +97,16 @@ class WorstFitOn(Online):
                         bin_index = i
                         min_load = sum(solution[i])
             if bin_index >= 0:
-                solution[bin_index].append(w)    
+                solution[bin_index].append(w)
             # No bin found with enough space, creating new bin
             else:
                 solution.append([w])
         return solution
 
 # End of T2 Online Algorithms -----
-
 # T4 Algorithms ---
+
+
 class RefinedFirstFitOn(Online):
     def classifyItem(self, weight: int) -> int:
         ratio = weight/self.capacity
@@ -117,13 +120,13 @@ class RefinedFirstFitOn(Online):
 
         # B2-Piece
         elif 1/3 < ratio <= 2/5:
-            self.num_of_BTwos+=1
-            for i in (6,7,8,9):
+            self.num_of_BTwos += 1
+            for i in (6, 7, 8, 9):
                 # Is (mk)th b2 piece we've seen
-                if self.num_of_BTwos%i == 0:
+                if self.num_of_BTwos % i == 0:
                     return 1
-            
-            #Not (mk)th b2 piece 
+
+            # Not (mk)th b2 piece
             return 3
 
         # X-Piece
@@ -135,24 +138,25 @@ class RefinedFirstFitOn(Online):
         self.num_of_BTwos = 0
         solution = []
         classes_of_bins = []
-        # For each item, find the first bin of the same class with enough capacity to hold it
-        # If no such bin exists, create a new bin and classify it with the same designation of the item
+        # For each item, find the first bin of the same class with enough
+        # capacity to hold it. If no such bin exists, create a new bin
+        # and classify it with the same designation of the item
         for w in stream:
             found = False
             item_class = self.classifyItem(w)
             for i in range(len(solution)):
                 # If bin is proper class and has room
-                if classes_of_bins[i] == item_class and (sum(solution[i]) + w < capacity):
+                if (classes_of_bins[i] == item_class
+                   and (sum(solution[i]) + w < capacity)):
                     solution[i].append(w)
                     found = True
                     break
-            
-            # No bin found with both the same class and enough space, creating new bin           
-            if not(found):
+
+            # No bin found, creating new bin
+            if not (found):
                 solution.append([w])
                 classes_of_bins.append(item_class)
 
-
         return solution
 
-# End of T4 Algorithms ---- 
+# End of T4 Algorithms ----
