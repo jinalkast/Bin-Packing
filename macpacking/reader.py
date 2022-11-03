@@ -24,6 +24,13 @@ class DatasetReader(ABC):
 
         return (capacity, iterator())
 
+    def multiway(self, num_bins) -> WeightSet:
+        '''Return a WeightSet (with num_bins instead of capacity) to support a fixed bin size algorithm'''
+        (capacity, weights) = self._load_data_from_disk()
+        seed(42)          # always produce the same shuffled result
+        shuffle(weights)  # side effect shuffling
+        return (num_bins, weights)
+
     @abstractmethod
     def _load_data_from_disk(self) -> WeightSet:
         '''Method that read the data from disk, depending on the file format'''

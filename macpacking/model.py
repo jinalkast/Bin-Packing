@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Iterator
-from . import WeightStream, WeightSet, Solution
+from . import WeightStream, WeightIterator, WeightSet, WeightList, Solution
 
 
 class BinPacker(ABC):
@@ -14,7 +13,7 @@ class Online(BinPacker):
         return self._process(capacity, stream)
 
     @abstractmethod
-    def _process(self, c: int, stream: Iterator[int]) -> Solution:
+    def _process(self, c: int, stream: WeightIterator) -> Solution:
         pass
 
 
@@ -25,5 +24,5 @@ class Offline(BinPacker):
         return self._process(capacity, weights)
 
     @abstractmethod
-    def _process(self, c: int, weights: list[int]) -> Solution:
+    def _process(self, c: int, weights: WeightList) -> Solution:
         pass

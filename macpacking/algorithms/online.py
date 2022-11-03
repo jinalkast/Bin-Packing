@@ -1,10 +1,10 @@
-from .. import Solution, WeightStream
+from .. import Solution, WeightIterator
 from ..model import Online
 
 
 class NextFitOn(Online):
 
-    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+    def _process(self, capacity: int, stream: WeightIterator) -> Solution:
         bin_index = 0
         solution = [[]]
         remaining = capacity
@@ -18,12 +18,12 @@ class NextFitOn(Online):
                 remaining = capacity - w
         return solution
 
-# T1 - Worst Possible algorithm ----
+# T1 - Worst Possible Algorithm ----
 
 
 class WorstSolution(Online):
 
-    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+    def _process(self, capacity: int, stream: WeightIterator) -> Solution:
         solution = []
         # For each item, create its own bin and append it to the
         # solution list
@@ -31,12 +31,12 @@ class WorstSolution(Online):
             solution.append([w])
         return solution
 
-# T2 - Online algorithms ------------
+# T2 - Online Algorithms ------------
 
 
 class FirstFitOn(Online):
 
-    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+    def _process(self, capacity: int, stream: WeightIterator) -> Solution:
         solution = [[]]
         # For each item, find the first bin with enough capacity to hold it
         # If no such bin exists, create a new bin containing it
@@ -58,7 +58,7 @@ class FirstFitOn(Online):
 
 class BestFitOn(Online):
 
-    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+    def _process(self, capacity: int, stream: WeightIterator) -> Solution:
         solution = [[]]
         # For each item, find the most full bin with enough capacity to hold it
         # If no such bin exists, create a new bin containing it
@@ -82,7 +82,7 @@ class BestFitOn(Online):
 
 class WorstFitOn(Online):
 
-    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+    def _process(self, capacity: int, stream: WeightIterator) -> Solution:
         solution = [[]]
         # For each item, find the emptiest bin with enough capacity to hold it
         # If no such bin exists, create a new bin containing it
@@ -104,10 +104,11 @@ class WorstFitOn(Online):
         return solution
 
 # End of T2 Online Algorithms -----
-# T4 Algorithms ---
 
+# T4 - Online Algorithms ---
 
 class RefinedFirstFitOn(Online):
+
     def classifyItem(self, weight: int) -> int:
         ratio = weight/self.capacity
         # A-Piece
@@ -133,7 +134,7 @@ class RefinedFirstFitOn(Online):
         elif 0 < ratio <= 1/3:
             return 4
 
-    def _process(self, capacity: int, stream: WeightStream) -> Solution:
+    def _process(self, capacity: int, stream: WeightIterator) -> Solution:
         self.capacity = capacity
         self.num_of_BTwos = 0
         solution = []
@@ -159,4 +160,4 @@ class RefinedFirstFitOn(Online):
 
         return solution
 
-# End of T4 Algorithms ----
+# End of T4 Online Algorithms ----
