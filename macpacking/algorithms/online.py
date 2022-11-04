@@ -107,6 +107,7 @@ class WorstFitOn(Online):
 
 # T4 - Online Algorithms ---
 
+
 class RefinedFirstFitOn(Online):
 
     def classifyItem(self, weight: int) -> int:
@@ -161,3 +162,21 @@ class RefinedFirstFitOn(Online):
         return solution
 
 # End of T4 Online Algorithms ----
+
+# T5 Algorithm ----
+
+
+class MultifitOn(Online):
+    def _process(self, bins: int, stream: WeightIterator) -> Solution:
+        solution = [[] for i in range(bins)]
+        for w in stream:
+            smallest_index = 0
+            smallest_weight = float('inf')
+            for i in range(bins):
+                if sum(solution[i]) < smallest_weight:
+                    smallest_weight = sum(solution[i])
+                    smallest_index = i
+
+            solution[smallest_index].append(w)
+
+        return solution

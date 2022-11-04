@@ -1,7 +1,7 @@
 import pyperf
 from os import listdir
 from os.path import isfile, join, basename
-from macpacking.algorithms.online import *
+from macpacking.algorithms.baseline import BenMaier
 from macpacking.reader import BinppReader
 
 
@@ -17,16 +17,19 @@ def main():
     cases = list_case_files(CASES)
     run_bench(cases)
 
+
 def list_case_files(dir: str) -> list[str]:
     return sorted([f'{dir}/{f}' for f in listdir(dir) if isfile(join(dir, f))])
+
 
 def run_bench(cases: list[str]):
     runner = pyperf.Runner()
     for case in cases:
         name = basename(case)
         data = BinppReader(case).online()
-        binpacker = WorstSolution()
+        binpacker = BenMaier()
         runner.bench_func(name, binpacker, data)
+
 
 if __name__ == "__main__":
     main()

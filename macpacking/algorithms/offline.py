@@ -5,7 +5,9 @@ from .online import (
     FirstFitOn as Ff_online,
     BestFitOn as Bf_online,
     WorstFitOn as Wf_online,
-    RefinedFirstFitOn as Rff_online)
+    RefinedFirstFitOn as Rff_online,
+    MultifitOn as MF_online
+)
 
 
 class OfflineDecreasing(Offline):
@@ -52,36 +54,9 @@ class RefinedFirstFitOff(OfflineDecreasing):
 
 # T5 Algorithms ----
 
-class Multifit(Offline):
 
-    def _process(self, n: int, weights: WeightList) -> Solution:
-        weights = sorted(weights, reverse=True)
-        l = max(sum(weights)/n, max(weights))
-        u = max(2*sum(weights)/n, max(weights))
-        strategy: Offline = FirstFitOff()
-        for i in range(1000):
-            c = (l + u)/2
-            num_bins = len(strategy([c, weights]))
-            if num_bins <= n:
-                u = c
-            else:
-                l = c
-        return strategy([u, weights])
+class MultifitOff(OfflineDecreasing):
 
-class MultifitTwo(Offline):
-        
-    def _process(self, n: int, weights: WeightList) -> Solution:
-        weights = sorted(weights, reverse=True)
-        bins = [[] for i in range(n)]
-        for w in weights:
-            smallest_index = 0
-            smallest_weight = float('inf')
-            for i in range(n):
-                if sum(bins[i]) < smallest_weight:
-                    smallest_weight = sum(bins[i])
-                    smallest_index = i
-
-            bins[smallest_index].append(w)
-        return bins
+    _OfflineDecreasing__delegation = MF_online()
 
 # End of T5 Algorithms ----

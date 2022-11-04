@@ -97,11 +97,21 @@ file_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
 def plot():
     plt.clf()
     # Plot the points above point graph
-    plt.plot(file_names, Baseline_dur, label = "Baseline")
-    plt.plot(file_names, Multifit_dur, label = "MultiFit")
+    plt.plot(file_names, Baseline_dur, label="Baseline")
+    plt.plot(file_names, Multifit_dur, label="MultiFit")
 
-    plt.errorbar(file_names, Baseline_dur, yerr=Baseline_error, fmt='o', label = "Baseline")
-    plt.errorbar(file_names, Multifit_dur, yerr=Multifit_error, fmt='o', label = "Multifit")
+    plt.errorbar(
+        file_names,
+        Baseline_dur,
+        yerr=Baseline_error,
+        fmt='o',
+        label="Baseline")
+    plt.errorbar(
+        file_names,
+        Multifit_dur,
+        yerr=Multifit_error,
+        fmt='o',
+        label="Multifit")
 
     plt.xlabel('Case')
     plt.ylabel('Duration in Micro Seconds')

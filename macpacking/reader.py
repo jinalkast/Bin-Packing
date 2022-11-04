@@ -24,13 +24,6 @@ class DatasetReader(ABC):
 
         return (capacity, iterator())
 
-    def multiway(self, num_bins) -> WeightSet:
-        '''Return a WeightSet (with num_bins instead of capacity) to support a fixed bin size algorithm'''
-        (capacity, weights) = self._load_data_from_disk()
-        seed(42)          # always produce the same shuffled result
-        shuffle(weights)  # side effect shuffling
-        return (num_bins, weights)
-
     @abstractmethod
     def _load_data_from_disk(self) -> WeightSet:
         '''Method that read the data from disk, depending on the file format'''
@@ -79,7 +72,7 @@ class JburkardtReader(DatasetReader):
             weights = []
             # Read each line, remove new line characters and
             # cast the string to an integer
-            for i in range(len(lines)-1):
+            for i in range(len(lines) - 1):
                 weights.append(int(lines[i].strip()))
 
             return (capacity, weights)
@@ -108,3 +101,7 @@ class SolutionReader():
                     if row[0] in self.__fileList[i]:
                         optimal_solutions[i] = int(row[1])
         return optimal_solutions
+
+
+def to_multiway(data: tuple, binCount: int) -> tuple:
+    return (binCount, data[1])

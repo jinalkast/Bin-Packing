@@ -242,6 +242,7 @@ file_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
 
 def pltOffline():
     plt.clf()
+
     # Plot the points above point graph
     plt.plot(file_names, NFOff_dur, label="NextFit Offline")
     plt.plot(file_names, BFOff_dur, label="BestFit Offline")
@@ -249,11 +250,17 @@ def pltOffline():
     plt.plot(file_names, FFOff_dur, label="FirstFit Offline")
     plt.plot(file_names, RffOff_dur, label="RefinedFirstFit Offline")
 
-    # plt.errorbar(file_names, NFOff_dur, yerr=NFOff_error, fmt='o', label = "NextFit Offline")
-    # plt.errorbar(file_names, BFOff_dur, yerr=BFOff_error, fmt='o', label = "BestFit Offline")
-    # plt.errorbar(file_names, WFOff_dur, yerr=WFOff_error, fmt='o', label = "WorstFit Offline")
-    # plt.errorbar(file_names, FFOff_dur, yerr=FFOff_error, fmt='o', label = "FirstFit Offline")
-    # plt.errorbar(file_names, RffOff_dur, yerr=RffOff_error, fmt='o', label = "FirstFit Offline")
+    # Plt Error Bars
+    # plt.errorbar(file_names, NFOff_dur, yerr=NFOff_error,
+    # fmt='o', label = "NextFit Offline")
+    # plt.errorbar(file_names, BFOff_dur, yerr=BFOff_error,
+    # fmt='o', label = "BestFit Offline")
+    # plt.errorbar(file_names, WFOff_dur, yerr=WFOff_error,
+    # fmt='o', label = "WorstFit Offline")
+    # plt.errorbar(file_names, FFOff_dur, yerr=FFOff_error,
+    # fmt='o', label = "FirstFit Offline")
+    # plt.errorbar(file_names, RffOff_dur, yerr=RffOff_error,
+    # fmt='o', label = "FirstFit Offline")
 
     plt.xlabel('Case')
     plt.ylabel('Duration in Micro Seconds')
@@ -265,6 +272,7 @@ def pltOffline():
 
 def pltOnline():
     plt.clf()
+
     # Plot the points above point graph
     plt.plot(file_names, NFOn_dur, label="NextFit Online")
     plt.plot(file_names, WS_dur, label="Worst Solution")
@@ -273,12 +281,19 @@ def pltOnline():
     plt.plot(file_names, FFOn_dur, label="FirstFit Online")
     plt.plot(file_names, RffOn_dur, label="RefinedFirstFit Online")
 
-    # plt.errorbar(file_names, NFOn_dur, yerr=NFOn_error, fmt='o', label = "NextFit Online")
-    # plt.errorbar(file_names, BFOn_dur, yerr=BFOn_error, fmt='o', label = "BestFit Online")
-    # plt.errorbar(file_names, WFOn_dur, yerr=WFOn_error, fmt='o', label = "WorstFit Online")
-    # plt.errorbar(file_names, FFOn_dur, yerr=FFOn_error, fmt='o', label = "FirstFit Online")
-    # plt.errorbar(file_names, WS_dur, yerr=WS_error, fmt='o', label = "FirstFit Online")
-    # plt.errorbar(file_names, RffOn_dur, yerr=RffOn_error, fmt='o', label = "FirstFit Online")
+    # Plt Error Bars
+    # plt.errorbar(file_names, NFOn_dur, yerr=NFOn_error,
+    # fmt='o', label = "NextFit Online")
+    # plt.errorbar(file_names, BFOn_dur, yerr=BFOn_error,
+    # fmt='o', label = "BestFit Online")
+    # plt.errorbar(file_names, WFOn_dur, yerr=WFOn_error,
+    # fmt='o', label = "WorstFit Online")
+    # plt.errorbar(file_names, FFOn_dur, yerr=FFOn_error,
+    # fmt='o', label = "FirstFit Online")
+    # plt.errorbar(file_names, WS_dur, yerr=WS_error,
+    # fmt='o', label = "FirstFit Online")
+    # plt.errorbar(file_names, RffOn_dur, yerr=RffOn_error,
+    # fmt='o', label = "FirstFit Online")
 
     plt.xlabel('Case')
     plt.ylabel('Duration in Nano Seconds')
@@ -290,7 +305,7 @@ def pltOnline():
 
 
 def main():
-    # pltOnline()
+    pltOnline()
     pltOffline()
 
 

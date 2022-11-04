@@ -1,19 +1,19 @@
 from os import listdir
 from os.path import isfile, join
-from macpacking.algorithms.offline import(
+from macpacking.reader import BinppReader
+from macpacking.reader import SolutionReader
+from macpacking.algorithms.offline import (
     NextFitOff as NFOff,
     WorstFitOff as WFOff,
     BestFitOff as BFOff,
     FirstFitOff as FFOff)
-from macpacking.algorithms.online import(
+from macpacking.algorithms.online import (
     NextFitOn as NFOn,
     WorstSolution as WS,
     WorstFitOn as WFOn,
     BestFitOn as BFOn,
     FirstFitOn as FFOn,
     RefinedFirstFitOn as RffOn)
-from macpacking.reader import BinppReader
-from macpacking.reader import SolutionReader
 
 OFFLINE_STRATEGIES = [
     NFOff, WFOff, BFOff, FFOff,
@@ -37,13 +37,20 @@ def main():
 
 
 def run_analyze_correctness(cases: list[str], functions: list):
+    # Get optimal bin nums for all problems in cases
     solution_reader = SolutionReader(cases, "./_datasets/solutions/binpp.csv")
     optimal_solutions = solution_reader.readSolutions()
+
     avg_excess = {}
     correct_percentage = {}
+
+    # For each function, find the avg num of excess bins it uses as well as
+    # the num of correct solutions it found
     for func in functions:
         num_of_excess_bins = 0
         num_of_correct_solutions = 0
+
+        # For each case, compare the answer with the correct answer
         for i in range(len(cases)):
             strategy = func()
             if func in OFFLINE_STRATEGIES:
@@ -54,9 +61,12 @@ def run_analyze_correctness(cases: list[str], functions: list):
             num_of_bins = len(strategy(data))
             optimal_solution = optimal_solutions[i]
 
+            # Increase count of correct solution and excess bin count
             num_of_correct_solutions += num_of_bins == optimal_solution
             num_of_excess_bins += num_of_bins - optimal_solutions[i]
 
+        # Calculate average excess and percentage correct after running all
+        # cases
         avg_excess[func.__name__] = num_of_excess_bins / len(cases)
         correct_percentage[func.__name__] = 100 * \
             num_of_correct_solutions / len(cases)
