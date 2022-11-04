@@ -68,4 +68,20 @@ class Multifit(Offline):
                 l = c
         return strategy([u, weights])
 
+class MultifitTwo(Offline):
+        
+    def _process(self, n: int, weights: WeightList) -> Solution:
+        weights = sorted(weights, reverse=True)
+        bins = [[] for i in range(n)]
+        for w in weights:
+            smallest_index = 0
+            smallest_weight = float('inf')
+            for i in range(n):
+                if sum(bins[i]) < smallest_weight:
+                    smallest_weight = sum(bins[i])
+                    smallest_index = i
+
+            bins[smallest_index].append(w)
+        return bins
+
 # End of T5 Algorithms ----
