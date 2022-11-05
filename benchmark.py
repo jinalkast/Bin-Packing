@@ -1,14 +1,14 @@
 import pyperf
 from os import listdir
 from os.path import isfile, join, basename
-from macpacking.algorithms.baseline import MultiwayNumberPartitioning as base
+from macpacking.algorithms.baseline import BenMaier as bp_base, MultiwayNumberPartitioning as multiway_base
 from macpacking.algorithms.offline import (
     NextFitOff as NFOff,
     WorstFitOff as WFOff,
     BestFitOff as BFOff,
     FirstFitOff as FFOff,
     RefinedFirstFitOff as RffOff,
-    MultifitOff as MfOff
+    EmptiestBinOff as EbOff
 )
 
 from macpacking.algorithms.online import (
@@ -18,7 +18,7 @@ from macpacking.algorithms.online import (
     BestFitOn as BFOn,
     FirstFitOn as FFOn,
     RefinedFirstFitOn as RffOn,
-    MultifitOn as MfOn
+    EmptiestBinOn as EbOn
 )
 
 from macpacking.reader import BinppReader
@@ -31,18 +31,19 @@ from macpacking.multiway_adapter import MultiwayAdapter
 CASES = './_datasets/binpp/N1C3W2'
 
 OFFLINE_STRATEGIES = [
-    NFOff, WFOff, BFOff, FFOff, RffOff, base
+    NFOff, WFOff, BFOff, FFOff, RffOff, EbOff, bp_base, multiway_base
 ]
 
 ONLINE_STRATEGIES = [
-    NFOn, WS, WFOn, BFOn, FFOn, RffOn
+    NFOn, WS, WFOn, BFOn, FFOn, RffOn, EbOn
 ]
 
 
 def main():
     '''Example of benchmark code'''
     cases = list_case_files(CASES)
-    run_bench_TFive(cases, [base, MfOn, MfOff])
+    run_bench_binpacking(cases, [NFOff, WFOff, BFOff, FFOff, RffOff, bp_base, NFOn, WS, WFOn, BFOn, FFOn, RffOn])
+    run_bench_TFive(cases, [multiway_base, EbOn, EbOff])
 
 
 def list_case_files(dir: str) -> list[str]:
@@ -74,9 +75,6 @@ def run_bench_TFive(cases: list[str], functions: list):
                 
             name = f'{func.__name__}-{basename(case)}'
             binpacker = func()
-            # print(data)
-            # print(name)
-            # print(binpacker)
             runner.bench_func(name, binpacker, data)
 
 

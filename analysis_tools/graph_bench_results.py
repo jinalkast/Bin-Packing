@@ -1,5 +1,26 @@
 import matplotlib.pyplot as plt
 # micro seconds
+Baseline_dur=[
+    228,
+    236,
+    255,
+    227,
+    227,
+    232,
+    246,
+    230,
+    198,
+    231,
+    224,
+    225,
+    228,
+    227,
+    209,
+    221,
+    223,
+    207,
+    237,
+    235]
 NFOff_dur = [
     4.27,
     4.39,
@@ -197,6 +218,27 @@ RffOn_dur = [199, 198, 199, 199, 203, 202, 201, 200, 200,
              199, 202, 200, 199, 199, 201, 200, 199, 200, 199, 200]
 
 # micro seconds
+Baseline_error = [
+    25, 
+    10, 
+    8, 
+    10, 
+    8, 
+    10, 
+    13, 
+    9, 
+    8, 
+    7, 
+    11, 
+    24, 
+    11, 
+    6, 
+    7, 
+    19, 
+    20, 
+    12, 
+    12, 
+    10]
 NFOff_error = [
     0.13,
     0.10,
@@ -244,6 +286,7 @@ def pltOffline():
     plt.clf()
 
     # Plot the points above point graph
+    plt.plot(file_names, Baseline_dur, label="Baseline")
     plt.plot(file_names, NFOff_dur, label="NextFit Offline")
     plt.plot(file_names, BFOff_dur, label="BestFit Offline")
     plt.plot(file_names, WFOff_dur, label="WorstFit Offline")
@@ -251,6 +294,8 @@ def pltOffline():
     plt.plot(file_names, RffOff_dur, label="RefinedFirstFit Offline")
 
     # Plt Error Bars
+    #plt.errorbar(file_names, Baseline_dur, yerr=Baseline_error,
+    #fmt='o', label = "Baseline")
     # plt.errorbar(file_names, NFOff_dur, yerr=NFOff_error,
     # fmt='o', label = "NextFit Offline")
     # plt.errorbar(file_names, BFOff_dur, yerr=BFOff_error,
@@ -261,7 +306,7 @@ def pltOffline():
     # fmt='o', label = "FirstFit Offline")
     # plt.errorbar(file_names, RffOff_dur, yerr=RffOff_error,
     # fmt='o', label = "FirstFit Offline")
-
+    
     plt.xlabel('Case')
     plt.ylabel('Duration in Micro Seconds')
     plt.title('Duration of Offline Algorithms')
