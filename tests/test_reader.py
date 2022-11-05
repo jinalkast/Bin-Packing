@@ -1,5 +1,9 @@
 from macpacking.reader import DatasetReader, JburkardtReader, SolutionReader
-from sample_bench import list_case_files
+from os import listdir
+from os.path import isfile, join
+
+def list_case_files(dir: str) -> list[str]:
+    return sorted([f'{dir}/{f}' for f in listdir(dir) if isfile(join(dir, f))])
 
 def test_JburkardtReader():
     #testing p01
@@ -46,4 +50,27 @@ def test_SolutionReader():
     cases = list_case_files(CASES)
     oracle = [56, 57, 56, 55, 57, 56, 57, 55, 57, 56]
     reader: SolutionReader = SolutionReader(cases, solution_file)
-    assert oracle == reader.readSolutions()    
+    assert oracle == reader.readSolutions()
+
+    #testing binpp (N1C3W4)    
+    solution_file = '_datasets/solutions/binpp.csv'
+    CASES = '_datasets/binpp/N1C3W4'
+    cases = list_case_files(CASES)
+    oracle = [21, 22, 24, 21, 23, 21, 23, 23, 23, 22, 24, 20, 21, 21, 22, 25, 25, 22, 22, 24]
+    reader: SolutionReader = SolutionReader(cases, solution_file)
+    assert oracle == reader.readSolutions()
+
+    #testing binpp once more for coverage (N3C2W1)
+    solution_file = '_datasets/solutions/binpp.csv'
+    CASES = '_datasets/binpp/N3C2W1'
+    cases = list_case_files(CASES)
+    oracle = [91, 82, 84, 85, 87, 88, 87, 87, 87, 87, 77, 91, 85, 91, 82, 88, 82, 82, 89, 83]
+    reader: SolutionReader = SolutionReader(cases, solution_file)
+    assert oracle == reader.readSolutions()
+
+    #testing jburkardt
+    solution_file = '_datasets/solutions/jburkardt.csv'
+    cases = ['p_01', 'p_02', 'p_03', 'p_04']
+    oracle = [4, 7, 4, 7]
+    reader: SolutionReader = SolutionReader(cases, solution_file)
+    assert oracle == reader.readSolutions()
