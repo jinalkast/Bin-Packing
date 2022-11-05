@@ -6,7 +6,7 @@ from .online import (
     BestFitOn as Bf_online,
     WorstFitOn as Wf_online,
     RefinedFirstFitOn as Rff_online,
-    MultifitOn as MF_online
+    EmptiestBinOn as EB_online
 )
 
 
@@ -55,8 +55,8 @@ class RefinedFirstFitOff(OfflineDecreasing):
 # T5 Algorithms ----
 
 
-class MultifitOff(OfflineDecreasing):
+class EmptiestBinOff(OfflineDecreasing):
 
-    _OfflineDecreasing__delegation = MF_online()
+    _OfflineDecreasing__delegation = EB_online()
 
 # End of T5 Algorithms ----

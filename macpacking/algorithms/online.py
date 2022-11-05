@@ -166,7 +166,7 @@ class RefinedFirstFitOn(Online):
 # T5 Algorithm ----
 
 
-class MultifitOn(Online):
+class EmptiestBinOn(Online):
     def _process(self, bins: int, stream: WeightIterator) -> Solution:
         solution = [[] for i in range(bins)]
         for w in stream:

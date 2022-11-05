@@ -22,6 +22,8 @@ from macpacking.algorithms.online import (
 )
 
 from macpacking.reader import BinppReader
+from macpacking.multiway_adapter import MultiwayAdapter
+
 # We consider:
 #   - 50 objects (N1)
 #   - bin capacity of 150 (C3)
@@ -29,7 +31,7 @@ from macpacking.reader import BinppReader
 CASES = './_datasets/binpp/N1C3W2'
 
 OFFLINE_STRATEGIES = [
-    NFOff, WFOff, BFOff, FFOff, RffOff
+    NFOff, WFOff, BFOff, FFOff, RffOff, base
 ]
 
 ONLINE_STRATEGIES = [
@@ -65,9 +67,16 @@ def run_bench_TFive(cases: list[str], functions: list):
     runner = pyperf.Runner()
     for func in functions:
         for case in cases:
+            if func in OFFLINE_STRATEGIES:
+                data = MultiwayAdapter.to_multiway(BinppReader(case).offline(),20)
+            else:
+                data = MultiwayAdapter.to_multiway(BinppReader(case).online(),20)
+                
             name = f'{func.__name__}-{basename(case)}'
-            data = BinppReader(case).multiway(5)
             binpacker = func()
+            # print(data)
+            # print(name)
+            # print(binpacker)
             runner.bench_func(name, binpacker, data)
 
 

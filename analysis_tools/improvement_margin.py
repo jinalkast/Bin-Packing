@@ -73,6 +73,5 @@ def run_analyze_correctness(cases: list[str], functions: list):
 
     return [avg_excess, correct_percentage]
 
-
 if __name__ == "__main__":
     main()

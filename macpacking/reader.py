@@ -101,7 +101,3 @@ class SolutionReader():
                     if row[0] in self.__fileList[i]:
                         optimal_solutions[i] = int(row[1])
         return optimal_solutions
-
-
-def to_multiway(data: tuple, binCount: int) -> tuple:
-    return (binCount, data[1])
