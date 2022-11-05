@@ -1,22 +1,30 @@
 from os import listdir
-from os.path import isfile, join
+from collections import defaultdict
+from os.path import isfile, join, basename
 from macpacking.reader import BinppReader
 from macpacking.reader import SolutionReader
 from macpacking.algorithms.offline import (
     NextFitOff as NFOff,
     WorstFitOff as WFOff,
     BestFitOff as BFOff,
-    FirstFitOff as FFOff)
+    FirstFitOff as FFOff,
+    EmptiestBinOff as EBOff,
+    Multifit as Mf,
+    )
 from macpacking.algorithms.online import (
     NextFitOn as NFOn,
     WorstSolution as WS,
     WorstFitOn as WFOn,
     BestFitOn as BFOn,
     FirstFitOn as FFOn,
-    RefinedFirstFitOn as RffOn)
+    RefinedFirstFitOn as RffOn,
+    EmptiestBinOn as EBOn
+    )
+from macpacking.algorithms.baseline import MultiwayNumberPartitioning as MNP, BenMaier
+from macpacking.multiway_adapter import MultiwayAdapter
 
 OFFLINE_STRATEGIES = [
-    NFOff, WFOff, BFOff, FFOff,
+    NFOff, WFOff, BFOff, FFOff, MNP, BenMaier
 ]
 
 ONLINE_STRATEGIES = [
@@ -73,5 +81,65 @@ def run_analyze_correctness(cases: list[str], functions: list):
 
     return [avg_excess, correct_percentage]
 
+def find_max_bin_size_fixed_k(cases: list[str], functions: list, k: int):
+    max_sizes = defaultdict(dict)
+    for func in functions:
+        for case in cases:
+            if func in OFFLINE_STRATEGIES:
+                data = MultiwayAdapter.to_multiway(BinppReader(case).offline(), k)
+            else:
+                data = MultiwayAdapter.to_multiway(BinppReader(case).online(), k)
+            strategy = func()
+            result = strategy(data)
+            max_bin_size = max([sum(bin) for bin in result])
+            max_sizes[func.__name__][basename(case)] = max_bin_size
+
+    return max_sizes
+
+def find_min_bin_size_fixed_k(cases: list[str], functions: list, k: int):
+    min_sizes = defaultdict(dict)
+    for func in functions:
+        for case in cases:
+            if func in OFFLINE_STRATEGIES:
+                data = MultiwayAdapter.to_multiway(BinppReader(case).offline(), k)
+            else:
+                data = MultiwayAdapter.to_multiway(BinppReader(case).online(), k)
+            strategy = func()
+            result = strategy(data)
+            min_bin_size = min([sum(bin) for bin in result])
+            min_sizes[func.__name__][basename(case)] = min_bin_size
+
+    return min_sizes
+
+def find_max_bin_size_var_k(testcase: str, functions: list, lower: int, upper: int):
+    max_sizes = defaultdict(dict)
+    for func in functions:
+        for k in range(lower,upper):
+            if func in OFFLINE_STRATEGIES:
+                data = MultiwayAdapter.to_multiway(BinppReader(testcase).offline(), k)
+            else:
+                data = MultiwayAdapter.to_multiway(BinppReader(testcase).online(), k)
+            strategy = func()
+            result = strategy(data)
+            max_bin_size = max([sum(bin) for bin in result])
+            max_sizes[func.__name__][k] = max_bin_size
+
+    return max_sizes
+
+def find_min_bin_size_var_k(testcase: str, functions: list, lower: int, upper: int):
+    min_sizes = defaultdict(dict)
+    for func in functions:
+        for k in range(lower,upper):
+            if func in OFFLINE_STRATEGIES:
+                data = MultiwayAdapter.to_multiway(BinppReader(testcase).offline(), k)
+            else:
+                data = MultiwayAdapter.to_multiway(BinppReader(testcase).online(), k)
+            strategy = func()
+            result = strategy(data)
+            min_bin_size = min([sum(bin) for bin in result])
+            min_sizes[func.__name__][k] = min_bin_size
+
+    return min_sizes
+    
 if __name__ == "__main__":
     main()

@@ -54,7 +54,7 @@ class RefinedFirstFitOff(OfflineDecreasing):
 
 # T5 Algorithms ----
 
-class multifit(Offline):
+class Multifit(Offline):
     def _process(self, n: int, weights: WeightList) -> Solution:
         weights = sorted(weights, reverse=True)
         l = max(sum(weights)/n, max(weights))
