@@ -165,18 +165,24 @@ class RefinedFirstFitOn(Online):
 
 # T5 Algorithm ----
 
-
 class EmptiestBinOn(Online):
     def _process(self, bins: int, stream: WeightIterator) -> Solution:
+        # Make all bins
         solution = [[] for i in range(bins)]
+        # For each item in the stream, find the least full bin it can
+        # fit into
         for w in stream:
             smallest_index = 0
+            # Initial smallest weight is inf
             smallest_weight = float('inf')
             for i in range(bins):
+                # check if bin weight < smallest seen weight
                 if sum(solution[i]) < smallest_weight:
+                    # Record new record weight and corresponding index
                     smallest_weight = sum(solution[i])
                     smallest_index = i
-
+            # After checking all bins, append item to smallest bin 
+            # discovered
             solution[smallest_index].append(w)
 
         return solution

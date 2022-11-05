@@ -150,10 +150,11 @@ file_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
 def plot():
     plt.clf()
     # Plot the points above point graph
-    # plt.plot(file_names, Baseline_dur, label="Baseline")
     plt.plot(file_names, EmptiestBinOff_dur, label="EmptiestBinOff")
     plt.plot(file_names, EmptiestBinOn_dur, label="EmptiestBinOn")
 
+    # Uncomment to see base function in graphs
+    # plt.plot(file_names, Baseline_dur, label="Baseline")
     # plt.errorbar(
     #     file_names,
     #     Baseline_dur,

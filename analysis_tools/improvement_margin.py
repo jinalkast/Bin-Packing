@@ -38,12 +38,6 @@ def list_case_files(dir: str) -> list[str]:
     return sorted([f'{dir}/{f}' for f in listdir(dir) if isfile(join(dir, f))])
 
 
-def main():
-    '''Example of benchmark code'''
-    cases = list_case_files(CASES)
-    run_analyze_correctness(cases, OFFLINE_STRATEGIES + ONLINE_STRATEGIES)
-
-
 def run_analyze_correctness(cases: list[str], functions: list):
     # Get optimal bin nums for all problems in cases
     solution_reader = SolutionReader(cases, "./_datasets/solutions/binpp.csv")
@@ -83,6 +77,8 @@ def run_analyze_correctness(cases: list[str], functions: list):
 
 def find_max_bin_size_fixed_k(cases: list[str], functions: list, k: int):
     max_sizes = defaultdict(dict)
+    # For each function and case, compute the max bin size and save it to a dictionary of
+    # dictionaries
     for func in functions:
         for case in cases:
             if func in OFFLINE_STRATEGIES:
@@ -90,7 +86,9 @@ def find_max_bin_size_fixed_k(cases: list[str], functions: list, k: int):
             else:
                 data = MultiwayAdapter.to_multiway(BinppReader(case).online(), k)
             strategy = func()
+            # Get results
             result = strategy(data)
+            # Compute and save
             max_bin_size = max([sum(bin) for bin in result])
             max_sizes[func.__name__][basename(case)] = max_bin_size
 
@@ -98,6 +96,8 @@ def find_max_bin_size_fixed_k(cases: list[str], functions: list, k: int):
 
 def find_min_bin_size_fixed_k(cases: list[str], functions: list, k: int):
     min_sizes = defaultdict(dict)
+    # For each function and case, compute the min bin size and save it to a dictionary of
+    # dictionaries
     for func in functions:
         for case in cases:
             if func in OFFLINE_STRATEGIES:
@@ -105,13 +105,17 @@ def find_min_bin_size_fixed_k(cases: list[str], functions: list, k: int):
             else:
                 data = MultiwayAdapter.to_multiway(BinppReader(case).online(), k)
             strategy = func()
+            # Get results
             result = strategy(data)
+            # Compute and save
             min_bin_size = min([sum(bin) for bin in result])
             min_sizes[func.__name__][basename(case)] = min_bin_size
 
     return min_sizes
 
 def find_max_bin_size_var_k(testcase: str, functions: list, lower: int, upper: int):
+    # For each function and size of k, compute the max bin size and save it to a dictionary of
+    # dictionaries
     max_sizes = defaultdict(dict)
     for func in functions:
         for k in range(lower,upper):
@@ -120,13 +124,17 @@ def find_max_bin_size_var_k(testcase: str, functions: list, lower: int, upper: i
             else:
                 data = MultiwayAdapter.to_multiway(BinppReader(testcase).online(), k)
             strategy = func()
+            # Get results
             result = strategy(data)
+            # Compute and save
             max_bin_size = max([sum(bin) for bin in result])
             max_sizes[func.__name__][k] = max_bin_size
 
     return max_sizes
 
 def find_min_bin_size_var_k(testcase: str, functions: list, lower: int, upper: int):
+    # For each function and size of k, compute the min bin size and save it to a dictionary of
+    # dictionaries
     min_sizes = defaultdict(dict)
     for func in functions:
         for k in range(lower,upper):
@@ -135,11 +143,10 @@ def find_min_bin_size_var_k(testcase: str, functions: list, lower: int, upper: i
             else:
                 data = MultiwayAdapter.to_multiway(BinppReader(testcase).online(), k)
             strategy = func()
+            # Get results
             result = strategy(data)
+            # Compute and save
             min_bin_size = min([sum(bin) for bin in result])
             min_sizes[func.__name__][k] = min_bin_size
 
     return min_sizes
-    
-if __name__ == "__main__":
-    main()
