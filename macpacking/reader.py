@@ -68,12 +68,13 @@ class JburkardtReader(DatasetReader):
 
         with open(self.__w_filename, 'r') as r2:
             lines = r2.readlines()
-
+            
             weights = []
             # Read each line, remove new line characters and
             # cast the string to an integer
-            for i in range(len(lines) - 1):
-                weights.append(int(lines[i].strip()))
+            for i in range(len(lines)):
+                if (lines[i] != '\n'):
+                    weights.append(int(lines[i].strip()))
 
             return (capacity, weights)
 
