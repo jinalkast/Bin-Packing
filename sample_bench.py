@@ -1,7 +1,7 @@
 import pyperf
 from os import listdir
 from os.path import isfile, join, basename
-from macpacking.algorithms.online import NextFit
+from macpacking.algorithms.baseline import BenMaier
 from macpacking.reader import BinppReader
 
 
@@ -27,7 +27,7 @@ def run_bench(cases: list[str]):
     for case in cases:
         name = basename(case)
         data = BinppReader(case).online()
-        binpacker = NextFit()
+        binpacker = BenMaier()
         runner.bench_func(name, binpacker, data)
 
 
