@@ -42,7 +42,19 @@ ONLINE_STRATEGIES = [
 def main():
     '''Example of benchmark code'''
     cases = list_case_files(CASES)
-    run_bench_binpacking(cases, [NFOff, WFOff, BFOff, FFOff, RffOff, bp_base, NFOn, WS, WFOn, BFOn, FFOn, RffOn])
+    run_bench_binpacking(cases,
+                         [NFOff,
+                          WFOff,
+                          BFOff,
+                          FFOff,
+                          RffOff,
+                          bp_base,
+                          NFOn,
+                          WS,
+                          WFOn,
+                          BFOn,
+                          FFOn,
+                          RffOn])
     run_bench_TFive(cases, [multiway_base, EbOn, EbOff])
 
 
@@ -69,10 +81,12 @@ def run_bench_TFive(cases: list[str], functions: list):
     for func in functions:
         for case in cases:
             if func in OFFLINE_STRATEGIES:
-                data = MultiwayAdapter.to_multiway(BinppReader(case).offline(),20)
+                data = MultiwayAdapter.to_multiway(
+                    BinppReader(case).offline(), 20)
             else:
-                data = MultiwayAdapter.to_multiway(BinppReader(case).online(),20)
-                
+                data = MultiwayAdapter.to_multiway(
+                    BinppReader(case).online(), 20)
+
             name = f'{func.__name__}-{basename(case)}'
             binpacker = func()
             runner.bench_func(name, binpacker, data)

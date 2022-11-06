@@ -54,20 +54,21 @@ class RefinedFirstFitOff(OfflineDecreasing):
 
 # T5 Algorithms ----
 
+
 class Multifit(Offline):
     def _process(self, n: int, weights: WeightList) -> Solution:
         weights = sorted(weights, reverse=True)
-        l = max(sum(weights)/n, max(weights))
-        u = max(2*sum(weights)/n, max(weights))
+        lower = max(sum(weights) / n, max(weights))
+        upper = max(2 * sum(weights) / n, max(weights))
         strategy: Offline = FirstFitOff()
         for i in range(1000):
-            c = (l + u)/2
+            c = (lower + upper) / 2
             num_bins = len(strategy([c, weights]))
             if num_bins <= n:
-                u = c
+                upper = c
             else:
-                l = c
-        return strategy([u, weights])
+                lower = c
+        return strategy([upper, weights])
 
 
 class EmptiestBinOff(OfflineDecreasing):

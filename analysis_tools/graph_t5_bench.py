@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
+
+
 def nanoToMicro(n):
-    return n/1000
+    return n / 1000
+
 
 # micro seconds
 Baseline_dur = [
@@ -68,7 +71,7 @@ EmptiestBinOn_dur = [
     626,
     620,
     611
-    ]
+]
 EmptiestBinOn_error = [
     16,
     12,
@@ -90,9 +93,9 @@ EmptiestBinOn_error = [
     12,
     35,
     25,
-    ]
+]
 
-#Micro Seconds
+# Micro Seconds
 EmptiestBinOn_dur = list(map(nanoToMicro, EmptiestBinOn_dur))
 EmptiestBinOn_error = list(map(nanoToMicro, EmptiestBinOn_error))
 

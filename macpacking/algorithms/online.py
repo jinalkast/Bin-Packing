@@ -111,17 +111,17 @@ class WorstFitOn(Online):
 class RefinedFirstFitOn(Online):
 
     def classifyItem(self, weight: int) -> int:
-        ratio = weight/self.capacity
+        ratio = weight / self.capacity
         # A-Piece
-        if 1/2 < ratio <= 1:
+        if 1 / 2 < ratio <= 1:
             return 1
 
         # B1-Piece
-        elif 2/5 < ratio <= 1/2:
+        elif 2 / 5 < ratio <= 1 / 2:
             return 2
 
         # B2-Piece
-        elif 1/3 < ratio <= 2/5:
+        elif 1 / 3 < ratio <= 2 / 5:
             self.num_of_BTwos += 1
             for i in (6, 7, 8, 9):
                 # Is (mk)th b2 piece we've seen
@@ -132,7 +132,7 @@ class RefinedFirstFitOn(Online):
             return 3
 
         # X-Piece
-        elif 0 < ratio <= 1/3:
+        elif 0 < ratio <= 1 / 3:
             return 4
 
     def _process(self, capacity: int, stream: WeightIterator) -> Solution:
@@ -165,6 +165,7 @@ class RefinedFirstFitOn(Online):
 
 # T5 Algorithm ----
 
+
 class EmptiestBinOn(Online):
     def _process(self, bins: int, stream: WeightIterator) -> Solution:
         # Make all bins
@@ -181,7 +182,7 @@ class EmptiestBinOn(Online):
                     # Record new record weight and corresponding index
                     smallest_weight = sum(solution[i])
                     smallest_index = i
-            # After checking all bins, append item to smallest bin 
+            # After checking all bins, append item to smallest bin
             # discovered
             solution[smallest_index].append(w)
 
