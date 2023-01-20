@@ -14,4 +14,3 @@ Made in Python using Visual Studio Code
 ## Notes 📝 ##
 
 Worked alongside lab partner: [Maged Armanios](https://github.com/marmanios)
-
